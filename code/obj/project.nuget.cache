@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "sPa0YEqxXa18nFajHU3vVSL4sW5dlVgGAuR/YNtU0l/yf7ctt7WMRoyDggWJCrfd+JTJ6/QpMQIPSIuUkAc0og==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\1chri\\Desktop\\vagrant + docker test\\code\\ConsoleApp1\\ConsoleApp1.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://nuget.intranet.createitreal.com/v3/index.json'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
+}
