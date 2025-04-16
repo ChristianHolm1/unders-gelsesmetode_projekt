@@ -1,28 +1,31 @@
-# Use the official .NET SDK image as the build environment
+# Use the official .NET SDK image for building
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the project files
+# Copy solution and project files
 COPY code/*.sln ./
 COPY code/ ./code/
 
-# Restore dependencies
+# Install necessary NuGet packages
 WORKDIR /app/code
-RUN dotnet restore
+RUN dotnet add package BenchmarkDotNet \
+    && dotnet add package ClosedXML \
+    && dotnet add package Newtonsoft.Json
 
-# Build and publish the project
+# Restore and publish in Release mode
+RUN dotnet restore
 RUN dotnet publish -c Release -o /app/publish --no-restore
 
-# Use the .NET runtime image for the final container
+# Use the .NET runtime image for final stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the published output from the build environment
+# Copy the published output
 COPY --from=build-env /app/publish ./
 
-# Command to run the application
-CMD ["dotnet", "ConsoleApp1.dll"]
+# Run the app
+CMD ["dotnet", "LINQ_Benchmarking.dll"]

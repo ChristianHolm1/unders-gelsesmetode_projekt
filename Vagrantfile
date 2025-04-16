@@ -2,7 +2,7 @@
 Vagrant.configure("2") do |config|
   # Specify the base Linux box (Ubuntu 22.04 LTS)
   config.vm.box = "ubuntu/jammy64"
-  config.ssh.insert_key = false
+  config.ssh.insert_key = true
 
   # Set VM resources
   config.vm.provider "virtualbox" do |vb|
