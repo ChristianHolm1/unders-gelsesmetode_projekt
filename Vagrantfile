@@ -27,5 +27,4 @@ Vagrant.configure("2") do |config|
 
   # Shared folders
   config.vm.synced_folder "./code", "/home/vagrant/code", type: "virtualbox"
-  config.vm.synced_folder "./output", "/home/vagrant/output", type: "virtualbox"
 end
