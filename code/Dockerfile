@@ -1,25 +1,14 @@
-# Step 1: Use the official .NET SDK base image
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
+# Use the official .NET 8 SDK image (this is now the FINAL image too!)
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS final
 
-# Step 2: Set working directory in the container
+# Set working directory
 WORKDIR /app
 
-## Step 3: Copy the solution and project files
-COPY LINQ_Benchmarking.sln ./
-COPY LINQ_Benchmarking/ ./LINQ_Benchmarking/
-# Step 3: Optional - verify SDK is present
-RUN dotnet --info
-
-# Step 4: Copy the project files
+# Copy everything into container
 COPY . .
 
-# Step 5: Restore the project dependencies
-RUN dotnet restore LINQ_Benchmarking.sln
+# Build project in Release mode
+RUN dotnet build -c Release
 
-# Step 6: Build the project
-RUN dotnet build LINQ_Benchmarking.sln -c Release
-
-# Step 7: Define entry point for the container
-ENTRYPOINT ["dotnet", "run", "--project", "LINQ_Benchmarking/"]
-
-
+# Run the benchmarks
+ENTRYPOINT ["dotnet", "run", "--configuration", "Release", "--"]

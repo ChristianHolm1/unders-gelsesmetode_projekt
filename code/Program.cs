@@ -25,12 +25,16 @@ public class DataBenchmarks
     {
         public Config()
         {
+            ArtifactsPath = "./artifacts";
+            Console.WriteLine($"Artifacts will be stored in: {Path.Combine(AppContext.BaseDirectory, ArtifactsPath)}");
+
             AddJob(Job.Default
                 .WithLaunchCount(1)
                 .WithWarmupCount(3)
-                .WithIterationCount(50)
-                .WithMaxIterationCount(51)
-                .WithMinIterationCount(49)
+                .WithIterationCount(10)
+                .WithMaxIterationCount(11)
+                .WithMinIterationCount(9)
+
             );
             AddExporter(JsonExporter.Brief);
         }
@@ -79,19 +83,19 @@ public class DataBenchmarks
         return dataUnsorted.Contains(searchTarget);
     }
 
-    //[Benchmark]
-    //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-    //public bool SearchLINQSorted()
-    //{
-    //    return dataSorted.Contains(searchTarget);
-    //}
+    [Benchmark]
+    [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+    public bool SearchLINQSorted()
+    {
+        return dataSorted.Contains(searchTarget);
+    }
 
-    //[Benchmark]
-    //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-    //public bool BinarySearchLINQ()
-    //{
-    //    return Array.BinarySearch(arraySorted, searchTarget) >= 0;
-    //}
+    [Benchmark]
+    [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+    public bool BinarySearchLINQ()
+    {
+        return Array.BinarySearch(arraySorted, searchTarget) >= 0;
+    }
 
     //[Benchmark]
     //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
@@ -224,8 +228,10 @@ public class DataBenchmarks
     public static void ExportData()
     {
         // Path to the JSON file under the Vagrant shared folder
-        var jsonPath = "/vagrant/code/LINQ_Benchmarking/bin/Release/net8.0/BenchmarkDotNet.Artifacts/results/DataBenchmarks-report-brief.json";
-        var outputPath = "../../vagrant/benchmark_results_vertical.xlsx";
+        var jsonPath = "/home/vagrant/code/artifacts/results/DataBenchmarks-report-brief.json";
+        var timestamp = DateTime.Now.ToLocalTime();
+        var outputPath = "/home/vagrant/code/output/benchmark_results_" +
+                          timestamp.ToString("yyyyMMdd_HHmmss") + ".xlsx";
 
         if (!File.Exists(jsonPath))
         {
@@ -238,13 +244,13 @@ public class DataBenchmarks
         var benchmarks = root["Benchmarks"];
 
         using var workbook = new XLWorkbook();
-        var worksheet = workbook.Worksheets.Add("VerticalValues");
+        var worksheet = workbook.Worksheets.Add("BenchmarkingValues");
 
         int column = 1;
 
         foreach (var benchmark in benchmarks)
         {
-            var name = benchmark["DisplayInfo"]?.ToString();
+            var name = benchmark["Method"]?.ToString();
             var originalValues = benchmark["Statistics"]?["OriginalValues"] as JArray;
 
             if (name != null && originalValues != null)
@@ -259,8 +265,8 @@ public class DataBenchmarks
                 column++;
             }
         }
-        var timestamp = DateTime.Now;
-        workbook.SaveAs(outputPath + "_" + timestamp);
+        
+        workbook.SaveAs(outputPath);
         Console.WriteLine($"Excel file created: {outputPath}");
     }
 }
