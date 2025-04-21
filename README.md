@@ -39,7 +39,7 @@ Extract the folder and open it in your terminal.
 Once you're inside the project folder in your terminal, run the following commands:
 
 ```bash
-#1. Start a virtual machine.
+#1. Start a virtual machine. (This step can take up to 5 minutes, if it's stuck, refere to troubleshooting)
 vagrant up
 
 #2. Run the benchmark tests inside the VM using .NET.
