@@ -402,4 +402,4 @@ FodyWeavers.xsd
 .vagrant/
 .vs/
 
-
+/.vagrant

@@ -31,9 +31,9 @@ public class DataBenchmarks
             AddJob(Job.Default
                 .WithLaunchCount(1)
                 .WithWarmupCount(3)
-                .WithIterationCount(10)
-                .WithMaxIterationCount(11)
-                .WithMinIterationCount(9)
+                .WithIterationCount(50)
+                .WithMaxIterationCount(51)
+                .WithMinIterationCount(49)
 
             );
             AddExporter(JsonExporter.Brief);
@@ -97,134 +97,134 @@ public class DataBenchmarks
         return Array.BinarySearch(arraySorted, searchTarget) >= 0;
     }
 
-    //[Benchmark]
-    //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-    //public bool BinarySearchStandard()
-    //{
-    //    int left = 0;
-    //    int right = arraySorted.Length - 1;
+    [Benchmark]
+    [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+    public bool BinarySearchStandard()
+    {
+       int left = 0;
+       int right = arraySorted.Length - 1;
 
-    //    while (left <= right)
-    //    {
-    //        int mid = left + (right - left) / 2;
+       while (left <= right)
+       {
+           int mid = left + (right - left) / 2;
 
-    //        if (arraySorted[mid] == searchTarget)
-    //            return true;
-    //        else if (arraySorted[mid] < searchTarget)
-    //            left = mid + 1;
-    //        else
-    //            right = mid - 1;
-    //    }
+           if (arraySorted[mid] == searchTarget)
+               return true;
+           else if (arraySorted[mid] < searchTarget)
+               left = mid + 1;
+           else
+               right = mid - 1;
+       }
 
-    //    return false;
-    //}
+       return false;
+    }
 
-    //[Benchmark]
-    //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-    //public bool LinearSearchFor()
-    //{
-    //    for (int i = 0; i < arrayUnsorted.Length; i++)
-    //    {
-    //        if (arrayUnsorted[i] == searchTarget)
-    //            return true;
-    //    }
-    //    return false;
-    //}
+    [Benchmark]
+    [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+    public bool LinearSearchFor()
+    {
+       for (int i = 0; i < arrayUnsorted.Length; i++)
+       {
+           if (arrayUnsorted[i] == searchTarget)
+               return true;
+       }
+       return false;
+    }
 
-    //[Benchmark]
-    //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-    //public bool LinearSearchWhile()
-    //{
-    //    int i = 0;
-    //    while (i < arrayUnsorted.Length)
-    //    {
-    //        if (arrayUnsorted[i] == searchTarget)
-    //            return true;
-    //        i++;
-    //    }
-    //    return false;
-    //}
+    [Benchmark]
+    [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+    public bool LinearSearchWhile()
+    {
+       int i = 0;
+       while (i < arrayUnsorted.Length)
+       {
+           if (arrayUnsorted[i] == searchTarget)
+               return true;
+           i++;
+       }
+       return false;
+    }
 
-    //[Benchmark]
-    //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-    //public List<int> SortLINQ()
-    //{
-    //    return dataUnsorted.OrderBy(x => x).ToList();
-    //}
+    [Benchmark]
+    [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+    public List<int> SortLINQ()
+    {
+       return dataUnsorted.OrderBy(x => x).ToList();
+    }
 
-    //[Benchmark]
-    //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-    //public int[] SortMergeSort()
-    //{
-    //    var copy = arrayUnsorted.ToArray();
-    //    MergeSort(copy, 0, copy.Length - 1);
-    //    return copy;
-    //}
+    [Benchmark]
+    [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+    public int[] SortMergeSort()
+    {
+       var copy = arrayUnsorted.ToArray();
+       MergeSort(copy, 0, copy.Length - 1);
+       return copy;
+    }
 
-    //[Benchmark]
-    //[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-    //public int[] SortQuickSort()
-    //{
-    //    var copy = arrayUnsorted.ToArray();
-    //    QuickSort(copy, 0, copy.Length - 1);
-    //    return copy;
-    //}
+    [Benchmark]
+    [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+    public int[] SortQuickSort()
+    {
+       var copy = arrayUnsorted.ToArray();
+       QuickSort(copy, 0, copy.Length - 1);
+       return copy;
+    }
 
-    //private void MergeSort(int[] array, int left, int right)
-    //{
-    //    if (left >= right) return;
+    private void MergeSort(int[] array, int left, int right)
+    {
+       if (left >= right) return;
 
-    //    int mid = (left + right) / 2;
-    //    MergeSort(array, left, mid);
-    //    MergeSort(array, mid + 1, right);
-    //    Merge(array, left, mid, right);
-    //}
+       int mid = (left + right) / 2;
+       MergeSort(array, left, mid);
+       MergeSort(array, mid + 1, right);
+       Merge(array, left, mid, right);
+    }
 
-    //private void Merge(int[] array, int left, int mid, int right)
-    //{
-    //    int[] temp = new int[right - left + 1];
-    //    int i = left, j = mid + 1, k = 0;
+    private void Merge(int[] array, int left, int mid, int right)
+    {
+       int[] temp = new int[right - left + 1];
+       int i = left, j = mid + 1, k = 0;
 
-    //    while (i <= mid && j <= right)
-    //        temp[k++] = array[i] <= array[j] ? array[i++] : array[j++];
+       while (i <= mid && j <= right)
+           temp[k++] = array[i] <= array[j] ? array[i++] : array[j++];
 
-    //    while (i <= mid)
-    //        temp[k++] = array[i++];
-    //    while (j <= right)
-    //        temp[k++] = array[j++];
+       while (i <= mid)
+           temp[k++] = array[i++];
+       while (j <= right)
+           temp[k++] = array[j++];
 
-    //    for (i = left, k = 0; i <= right; i++, k++)
-    //        array[i] = temp[k];
-    //}
+       for (i = left, k = 0; i <= right; i++, k++)
+           array[i] = temp[k];
+    }
 
 
-    //private void QuickSort(int[] array, int low, int high)
-    //{
-    //    if (low < high)
-    //    {
-    //        int pi = Partition(array, low, high);
-    //        QuickSort(array, low, pi - 1);
-    //        QuickSort(array, pi + 1, high);
-    //    }
-    //}
+    private void QuickSort(int[] array, int low, int high)
+    {
+       if (low < high)
+       {
+           int pi = Partition(array, low, high);
+           QuickSort(array, low, pi - 1);
+           QuickSort(array, pi + 1, high);
+       }
+    }
 
-    //private int Partition(int[] array, int low, int high)
-    //{
-    //    int pivot = array[high];
-    //    int i = low - 1;
+    private int Partition(int[] array, int low, int high)
+    {
+       int pivot = array[high];
+       int i = low - 1;
 
-    //    for (int j = low; j < high; j++)
-    //    {
-    //        if (array[j] <= pivot)
-    //        {
-    //            i++;
-    //            (array[i], array[j]) = (array[j], array[i]);
-    //        }
-    //    }
+       for (int j = low; j < high; j++)
+       {
+           if (array[j] <= pivot)
+           {
+               i++;
+               (array[i], array[j]) = (array[j], array[i]);
+           }
+       }
 
-    //    (array[i + 1], array[high]) = (array[high], array[i + 1]);
-    //    return i + 1;
-    //}
+       (array[i + 1], array[high]) = (array[high], array[i + 1]);
+       return i + 1;
+    }
     public static void ExportData()
     {
         // Path to the JSON file under the Vagrant shared folder

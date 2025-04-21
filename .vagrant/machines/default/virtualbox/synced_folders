@@ -1,1 +1,0 @@
-{"virtualbox":{"/home/vagrant/code":{"type":"virtualbox","guestpath":"/home/vagrant/code","hostpath":"C:/Users/1chri/Desktop/vagrant_docker_test/code","disabled":false,"__vagrantfile":true},"/home/vagrant/output":{"type":"virtualbox","guestpath":"/home/vagrant/output","hostpath":"C:/Users/1chri/Desktop/vagrant_docker_test/output","disabled":false,"__vagrantfile":true}}}
