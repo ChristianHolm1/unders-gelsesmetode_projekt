@@ -42,7 +42,7 @@ Once you're inside the project folder in your terminal, run the following comman
 #1. Start a virtual machine. (This step can take up to 5 minutes, if it's stuck, refere to troubleshooting)
 vagrant up
 
-#2. Run the benchmark tests inside the VM using .NET.
+#2. Run the benchmark tests inside the VM using .NET. (password: vagrant)
 vagrant ssh -c "cd code && dotnet run -c Release"
 
 #3. Shut the VM down when done.
