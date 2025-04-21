@@ -5,7 +5,7 @@ This project benchmarks the performance of LINQ-based sorting and searching vers
 ---
 
 ## 🧰 Prerequisites
-
+	
 Before you begin, make sure you have the following software installed:
 
 1. **[VirtualBox](https://www.virtualbox.org/wiki/Downloads)** – Used to run the virtual machine.
@@ -15,7 +15,7 @@ Before you begin, make sure you have the following software installed:
 
 ## 📦 Cloning the Project
 
-To get started, you'll need to download this project to your computer.
+To get started, you will need to download this project to your computer.
 
 ### Option 1: Using Git (recommended)
 
@@ -36,10 +36,10 @@ Extract the folder and open it in your terminal.
 
 ## 🚀 Running the Benchmarks
 
-Once you're inside the project folder in your terminal, run the following commands:
+Once you are inside the project folder in your terminal, run the following commands:
 
 ```bash
-#1. Start a virtual machine. (This step can take up to 5 minutes, if it's stuck, refere to troubleshooting)
+#1. Start a virtual machine. (This step can take up to 5 minutes and take a few tries, if it is stuck, refer to troubleshooting)
 vagrant up
 
 #2. Run the benchmark tests inside the VM using .NET. (password: vagrant)
