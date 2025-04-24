@@ -26,8 +26,7 @@ public class DataBenchmarks
         public Config()
         {
             ArtifactsPath = "./artifacts";
-            Console.WriteLine($"Artifacts will be stored in: {Path.Combine(AppContext.BaseDirectory, ArtifactsPath)}");
-
+            
             AddJob(Job.Default
                 .WithLaunchCount(1)
                 .WithWarmupCount(3)
@@ -227,7 +226,6 @@ public class DataBenchmarks
     }
     public static void ExportData()
     {
-        // Path to the JSON file under the Vagrant shared folder
         var jsonPath = "/home/vagrant/code/artifacts/results/DataBenchmarks-report-brief.json";
         var timestamp = DateTime.Now.ToLocalTime();
         var outputPath = "/home/vagrant/code/output/benchmark_results_" +
@@ -275,7 +273,6 @@ public class Program
 {
     public static void Main(string[] args)
     {
-
         BenchmarkRunner.Run<DataBenchmarks>();
         DataBenchmarks.ExportData();
     }
